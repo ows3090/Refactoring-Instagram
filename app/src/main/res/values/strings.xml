@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Refacstagram</string>
+    <string name="login_email">전화번호, 사용자 이름 또는 이메일</string>
+    <string name="login_paaword">비밀번호</string>
+    <string name="login_facebook">Facebook으로 로그인</string>
+    <string name="login_google">Google으로 로그인</string>
+</resources>
