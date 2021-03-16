@@ -4,4 +4,5 @@
     <string name="login_paaword">비밀번호</string>
     <string name="login_facebook">Facebook으로 로그인</string>
     <string name="login_google">Google으로 로그인</string>
+    <string name="google_web_client_id_token" translatable="false">799333621348-dtkai8fs216tqft8mcc26o1fk3m6e734.apps.googleusercontent.com</string>
 </resources>

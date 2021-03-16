@@ -1,9 +1,11 @@
-package com.androidstudy;
+package com.androidstudy.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.androidstudy.R;
 
 public class MainActivity extends AppCompatActivity {
 

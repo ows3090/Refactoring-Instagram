@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "799333621348",
+    "project_id": "refacstargram",
+    "storage_bucket": "refacstargram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799333621348:android:9d37af621e4ef95fcec971",
+        "android_client_info": {
+          "package_name": "com.androidstudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799333621348-dtkai8fs216tqft8mcc26o1fk3m6e734.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPTImzUJwHisTjDkSh754rYgpeg1AKa0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799333621348-dtkai8fs216tqft8mcc26o1fk3m6e734.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
