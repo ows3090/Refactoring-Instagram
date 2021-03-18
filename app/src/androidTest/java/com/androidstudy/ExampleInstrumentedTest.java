@@ -1,23 +1,23 @@
 package com.androidstudy;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
-import androidx.lifecycle.ViewModelProvider;
+
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+
 import com.androidstudy.di.DaggerFirebaseComponent;
 import com.androidstudy.di.FirebaseComponent;
-
-import org.mockito.Mockito;
-import org.mockito.Mockito.*;
 import com.androidstudy.viewmodels.LoginViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 
@@ -28,6 +28,15 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest{
+
+    @Mock
+    LoginViewModel loginViewModel;
+
+    @Before
+    public void setUp() {
+        loginViewModel = Mockito.mock(LoginViewModel.class);
+    }
+
     @Test
     public void useAppContext() {
         // Context of the app under test.
@@ -35,13 +44,23 @@ public class ExampleInstrumentedTest{
         assertEquals("com.androidstudy", appContext.getPackageName());
     }
 
+    /**
+     * Dependency Injection to FirebaseAuth Instance using Dagger
+     */
     @Test
     public void firebaseInstanceDI(){
-        LoginViewModel loginViewModel = Mockito.mock(LoginViewModel.class);
         FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
         firebaseComponent.inject(loginViewModel);
         assertNull(loginViewModel.getFirebaseAuth());
     }
 
+    @Test
+    public void firebaseSignIn(){
+        String email = "ows3090@naver.com";
+        String password = "ows3090";
+        loginViewModel.setEmail(email);
+        loginViewModel.setPassword(password);
+        assertEquals(false, loginViewModel.signInFirebase());
+    }
 
 }
