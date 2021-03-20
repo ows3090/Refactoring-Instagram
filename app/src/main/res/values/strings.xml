@@ -5,4 +5,10 @@
     <string name="login_facebook">Facebook으로 로그인</string>
     <string name="login_google">Google으로 로그인</string>
     <string name="google_web_client_id_token" translatable="false">799333621348-dtkai8fs216tqft8mcc26o1fk3m6e734.apps.googleusercontent.com</string>
+    <string name="signup_email">이메일을 입력해주세요</string>
+    <string name="signup_password">패스워드를 입력해주세요</string>
+
+    <string name="facebook_app_id">246051157230180</string>
+    <string name="fb_login_protocol_scheme">fb246051157230180</string>
+
 </resources>

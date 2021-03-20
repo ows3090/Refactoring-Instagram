@@ -3,7 +3,7 @@ package com.androidstudy;
 import android.content.Context;
 
 
-
+import androidx.lifecycle.ViewModelProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -29,19 +29,12 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest{
 
-    @Mock
     LoginViewModel loginViewModel;
 
     @Before
     public void setUp() {
-        loginViewModel = Mockito.mock(LoginViewModel.class);
-    }
-
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.androidstudy", appContext.getPackageName());
+        loginViewModel = new ViewModelProvider.NewInstanceFactory().create(LoginViewModel.class);
     }
 
     /**
@@ -51,7 +44,8 @@ public class ExampleInstrumentedTest{
     public void firebaseInstanceDI(){
         FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
         firebaseComponent.inject(loginViewModel);
-        assertNull(loginViewModel.getFirebaseAuth());
+        assertNotNull(loginViewModel.getFirebaseAuth());
+        assertNull(loginViewModel.getFirebaseAuth().getCurrentUser());
     }
 
     @Test
@@ -60,7 +54,7 @@ public class ExampleInstrumentedTest{
         String password = "ows3090";
         loginViewModel.setEmail(email);
         loginViewModel.setPassword(password);
-        assertEquals(false, loginViewModel.signInFirebase());
     }
+
 
 }
