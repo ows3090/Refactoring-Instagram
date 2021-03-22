@@ -10,5 +10,12 @@
 
     <string name="facebook_app_id">246051157230180</string>
     <string name="fb_login_protocol_scheme">fb246051157230180</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="upload_image">사진업로드</string>
+    <string name="favorite">Favorite</string>
+    <string name="account">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

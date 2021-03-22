@@ -57,7 +57,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        context = getApplication().getApplicationContext();
+        context = application;
         Log.d(TAG,"Call LoginViewModel Constructor");
         FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
         firebaseComponent.inject(this);
@@ -110,6 +110,8 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void signInFacebook(CallbackManager callbackManager){
+        LoginManager.getInstance()
+                .logInWithReadPermissions((LoginActivity)context.getApplicationContext(), Arrays.asList("profile","email"));
 
         LoginManager.getInstance()
                 .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

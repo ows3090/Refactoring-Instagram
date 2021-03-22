@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/detailViewFragment">
+
+    <fragment
+        android:id="@+id/detailViewFragment"
+        android:name="com.androidstudy.navigation.DetailViewFragment"
+        android:label="fragment_detail_view"
+        tools:layout="@layout/fragment_detail_view" >
+        <action
+            android:id="@+id/action_detailViewFragment_to_gridFragment"
+            app:destination="@id/gridFragment" />
+        <action
+            android:id="@+id/action_detailViewFragment_to_addPhotoFragment"
+            app:destination="@id/addPhotoFragment" />
+        <action
+            android:id="@+id/action_detailViewFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
+        <action
+            android:id="@+id/action_detailViewFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gridFragment"
+        android:name="com.androidstudy.navigation.GridFragment"
+        android:label="fragment_grid"
+        tools:layout="@layout/fragment_grid" />
+    <fragment
+        android:id="@+id/addPhotoFragment"
+        android:name="com.androidstudy.navigation.AddPhotoFragment"
+        android:label="fragment_add_photo"
+        tools:layout="@layout/fragment_add_photo" />
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.androidstudy.navigation.AlarmFragment"
+        android:label="fragment_alarm"
+        tools:layout="@layout/fragment_alarm" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.androidstudy.navigation.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
+</navigation>
