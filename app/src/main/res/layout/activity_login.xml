@@ -17,10 +17,11 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/activity_login_layout"
         android:src="@drawable/logo_title" />
 
     <LinearLayout
+        android:id="@+id/activity_login_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -102,10 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:text="가입하기"
-            android:textColor="@color/black"
             android:theme="@style/ButtonStyle"
-            android:background="@color/colorLightGray"
-            android:textStyle="bold"/>
+            android:background="@color/colorLightGray"/>
     </LinearLayout>
 </RelativeLayout>
 </layout>

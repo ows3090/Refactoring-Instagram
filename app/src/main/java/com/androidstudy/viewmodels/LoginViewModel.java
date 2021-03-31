@@ -48,17 +48,28 @@ import lombok.Setter;
 public class LoginViewModel extends AndroidViewModel {
 
     private static final String TAG = LoginViewModel.class.getSimpleName();
-    @Getter @Setter private String email;
-    @Getter @Setter private String password;
-    @Inject @Getter FirebaseAuth firebaseAuth;
-    @Getter private MutableLiveData<FirebaseUser> firebaseUser = new MutableLiveData<>();
-    @Getter private MutableLiveData<GoogleSignInClient> googleSignInClient = new MutableLiveData<>();
+
+    @Getter @Setter
+    private String email;
+
+    @Getter @Setter
+    private String password;
+
+    @Inject @Getter
+    FirebaseAuth firebaseAuth;
+
+    @Getter
+    private MutableLiveData<FirebaseUser> firebaseUser = new MutableLiveData<>();
+
+    @Getter
+    private MutableLiveData<GoogleSignInClient> googleSignInClient = new MutableLiveData<>();
+
     private Context context;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
         context = application;
-        Log.d(TAG,"Call LoginViewModel Constructor");
+        Log.d(TAG,"LoginViewModel Constructor");
         FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
         firebaseComponent.inject(this);
     }

@@ -17,6 +17,11 @@ import com.androidstudy.databinding.FragmentSignupdialogBinding;
 
 public class SignUpFragment extends DialogFragment {
 
+    @FunctionalInterface
+    interface DialogConfirmListener{
+        void onSignUpFirebase(@lombok.NonNull String email, @lombok.NonNull String password);
+    }
+
     private FragmentSignupdialogBinding binding;
     private DialogConfirmListener confirmListener;
 
@@ -46,4 +51,5 @@ public class SignUpFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         return super.onCreateDialog(savedInstanceState);
     }
+
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.androidstudy.viewmodels.UploadViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.UploadActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/activity_upload_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/activity_upload_iv_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/logo_title"
+                    android:scaleType="fitCenter"/>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/activity_upload_iv_photo"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="350dp"
+            android:layout_below="@id/activity_upload_toolbar"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activity_upload_layout_comment"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_upload_iv_photo"
+            android:gravity="center">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_upload_et_comment"
+                android:text="@={viewmodel.comment}"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:maxLines="3"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/activity_upload_layout_comment"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <android.widget.Button
+                android:id="@+id/activity_upload_btn"
+                android:onClick="onClickUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/ButtonStyle"
+                android:background="@drawable/round_border"
+                android:text="사진 올리기"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

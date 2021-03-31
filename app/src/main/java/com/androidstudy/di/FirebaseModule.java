@@ -1,6 +1,8 @@
 package com.androidstudy.di;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import javax.inject.Singleton;
 
@@ -13,5 +15,17 @@ public class FirebaseModule {
     @Singleton
     FirebaseAuth provideFirebaseAuth(){
         return FirebaseAuth.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseFirestore provideFirebaseFirestore(){
+        return FirebaseFirestore.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseStorage provideFirebaseStorage(){
+        return FirebaseStorage.getInstance();
     }
 }

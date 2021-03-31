@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.androidstudy.viewmodels.AddPhotoViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.AddPhotoActivity">
+
+        <ImageView
+            android:id="@+id/activity_addphoto_iv_profile"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_alignParentTop="true" />
+
+        <RelativeLayout
+            android:id="@+id/activity_addphoto_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/activity_addphoto_iv_profile"
+            android:gravity="center_vertical">
+
+            <android.widget.Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:background="@android:color/transparent"
+                android:text="사진 항목 "
+                android:theme="@style/ButtonStyle" />
+
+            <android.widget.Button
+                android:id="@+id/activity_addphoto_btn_upload"
+                android:onClick="onClickUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/round_border"
+                android:text="사진 선택"
+                android:theme="@style/ButtonStyle"/>
+
+        </RelativeLayout>>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_addphoto_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/activity_addphoto_layout" />
+    </RelativeLayout>
+</layout>

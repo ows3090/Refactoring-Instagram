@@ -14,9 +14,6 @@
             android:id="@+id/action_detailViewFragment_to_gridFragment"
             app:destination="@id/gridFragment" />
         <action
-            android:id="@+id/action_detailViewFragment_to_addPhotoFragment"
-            app:destination="@id/addPhotoFragment" />
-        <action
             android:id="@+id/action_detailViewFragment_to_alarmFragment"
             app:destination="@id/alarmFragment" />
         <action
@@ -28,11 +25,6 @@
         android:name="com.androidstudy.navigation.GridFragment"
         android:label="fragment_grid"
         tools:layout="@layout/fragment_grid" />
-    <fragment
-        android:id="@+id/addPhotoFragment"
-        android:name="com.androidstudy.navigation.AddPhotoFragment"
-        android:label="fragment_add_photo"
-        tools:layout="@layout/fragment_add_photo" />
     <fragment
         android:id="@+id/alarmFragment"
         android:name="com.androidstudy.navigation.AlarmFragment"

@@ -11,7 +11,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="35dp">
+            android:layout_height="50dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -20,7 +20,8 @@
                     android:id="@+id/activity_main_iv_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/logo_title"/>
+                    android:src="@drawable/logo_title"
+                    android:scaleType="fitCenter"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 

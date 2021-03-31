@@ -35,7 +35,7 @@ import java.util.Arrays;
 
 import lombok.NonNull;
 
-public class LoginActivity extends AppCompatActivity implements DialogConfirmListener {
+public class LoginActivity extends AppCompatActivity implements SignUpFragment.DialogConfirmListener {
     public static final String TAG = LoginActivity.class.getSimpleName();
     public static final int GOOGLE_LOGIN_CODE = 9001;
     private ActivityLoginBinding binding;
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements DialogConfirmLis
         Log.d(TAG, "onCreate");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
-        loginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginViewModel.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setViewmodel(loginViewModel);
 
         loginViewModel.getFirebaseUser().observe(this, user -> {
@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements DialogConfirmLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult");
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == GOOGLE_LOGIN_CODE) {
@@ -88,7 +89,6 @@ public class LoginActivity extends AppCompatActivity implements DialogConfirmLis
     public void startMain(FirebaseUser user) {
         Log.d(TAG, "Call startMain");
         if (user != null) {
-            Log.d(TAG, "Call start");
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
