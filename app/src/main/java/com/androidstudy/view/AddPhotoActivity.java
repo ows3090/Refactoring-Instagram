@@ -24,6 +24,7 @@ import com.androidstudy.viewmodels.AddPhotoViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import lombok.Setter;
@@ -32,40 +33,65 @@ public class AddPhotoActivity extends AppCompatActivity {
 
     public static final String TAG = AddPhotoActivity.class.getSimpleName();
     private static final int UPLOAD_CODE = 101;
+    private static final int ALBUM_CODE = 102;
     private ActivityAddPhotoBinding binding;
     private AddPhotoViewModel addPhotoViewModel;
-    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         addPhotoViewModel = new ViewModelProvider(this).get(AddPhotoViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_photo);
-        binding.activityAddphotoRv.setLayoutManager(new GridLayoutManager(this, 4));
+        binding.setViewmodel(addPhotoViewModel);
+        binding.setLifecycleOwner(this);
 
+        binding.activityAddphotoRv.setLayoutManager(new GridLayoutManager(this, 4));
         AddPhotoRecyclerViewAdapter adapter = new AddPhotoRecyclerViewAdapter();
         binding.activityAddphotoRv.setAdapter(adapter);
+
+        binding.activityAddphotoBtnUpload.setOnClickListener(v -> {
+            clickUploadImage(addPhotoViewModel.getSelectPath());
+        });
 
         addPhotoViewModel.getImageArrayList().observe(this, items -> {
             adapter.setItems(items);
             adapter.notifyDataSetChanged();
         });
+    }
 
-        bitmap = BitmapFactory.decodeFile(addPhotoViewModel.getImageArrayList().getValue().get(0));
-        binding.activityAddphotoIvProfile.setImageBitmap(bitmap);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart");
+        Glide.with(binding.getRoot().getContext())
+                .load(addPhotoViewModel.getImageArrayList().getValue().get(0))
+                .into(binding.activityAddphotoIvProfile);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult");
         if(requestCode == UPLOAD_CODE && resultCode == RESULT_OK){
             finish();
+        }else if(requestCode == ALBUM_CODE && resultCode == RESULT_OK){
+            String filepath = addPhotoViewModel.getFilePath(data.getData());
+            clickUploadImage(filepath);
         }
     }
 
-    public void onClickUpload(View v){
+    public void onClickAlbum(View v){
+        Log.d(TAG, "onClickAlbum");
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,ALBUM_CODE);
+    }
+
+    public void clickUploadImage(String path){
+        Log.d(TAG, "onClickUpload");
         Intent intent = new Intent(this, UploadActivity.class);
-        intent.putExtra("selectPath", addPhotoViewModel.getSelectPath() );
+        intent.putExtra("selectPath", path );
         startActivityForResult(intent,UPLOAD_CODE);
     }
 
@@ -103,8 +129,7 @@ public class AddPhotoActivity extends AppCompatActivity {
             // Set Click Listener
             imageView.setOnClickListener(v -> {
                 addPhotoViewModel.setSelectPath(items.get(position));
-                bitmap = BitmapFactory.decodeFile(items.get(position));
-                binding.activityAddphotoIvProfile.setImageBitmap(bitmap);
+                Glide.with(binding.getRoot().getContext()).load(items.get(position)).into(binding.activityAddphotoIvProfile);
             });
         }
 
@@ -112,5 +137,29 @@ public class AddPhotoActivity extends AppCompatActivity {
         public int getItemCount() {
             return items.size();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
     }
 }

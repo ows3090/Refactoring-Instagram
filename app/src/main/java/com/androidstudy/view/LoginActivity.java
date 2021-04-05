@@ -46,10 +46,11 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.setViewmodel(loginViewModel);
+        callbackManager = CallbackManager.Factory.create();
 
         loginViewModel.getFirebaseUser().observe(this, user -> {
             startMain(user);
@@ -58,13 +59,11 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
         loginViewModel.getGoogleSignInClient().observe(this, googleSignInClient -> {
             startGoogle(googleSignInClient);
         });
-
-        callbackManager = CallbackManager.Factory.create();
     }
 
     @Override
     public void onSignUpFirebase(@NonNull String email, @NonNull String password) {
-        Log.d(TAG, "Call DialogConfirmListener SignUpFirebase");
+        Log.d(TAG, "onSignUpFirebase");
         loginViewModel.signUpFirebase(email, password);
     }
 
@@ -87,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
     }
 
     public void startMain(FirebaseUser user) {
-        Log.d(TAG, "Call startMain");
+        Log.d(TAG, "startMain");
         if (user != null) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
@@ -95,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
     }
 
     public void signUpRefacstagram(View view) {
-        Log.d(TAG, "Call SignUpRefacstargram");
+        Log.d(TAG, "SignUpRefacstargram");
         SignUpFragment signUpFragment = new SignUpFragment(this);
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -105,15 +104,14 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
     }
 
     public void startGoogle(GoogleSignInClient googleSignInClient) {
-        Log.d(TAG, "Call startGoogle");
+        Log.d(TAG, "startGoogle");
         Intent intent = googleSignInClient.getSignInIntent();
         startActivityForResult(intent, GOOGLE_LOGIN_CODE);
     }
 
     public void startFacebook(View v){
-        Log.d(TAG, "Call startFacebook");
+        Log.d(TAG, "startFacebook");
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"));
         loginViewModel.signInFacebook(callbackManager);
     }
-
 }

@@ -69,13 +69,13 @@ public class LoginViewModel extends AndroidViewModel {
     public LoginViewModel(@NonNull Application application) {
         super(application);
         context = application;
-        Log.d(TAG,"LoginViewModel Constructor");
+        Log.d(TAG,"onCreate");
         FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
         firebaseComponent.inject(this);
     }
 
     public void signUpFirebase(String email, String password){
-        Log.d(TAG, "Call signUpFirebase");
+        Log.d(TAG, "signUpFirebase");
         firebaseAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(task -> {
                     Log.e(TAG, "Firebase createUserWithEmailAndPassword success");
@@ -85,7 +85,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void signInFirebase(){
-        Log.d(TAG, "Call signInFirebase");
+        Log.d(TAG, "signInFirebase");
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
@@ -98,6 +98,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void signInGoogle(){
+        Log.d(TAG,"signInGoogle");
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(context.getString(R.string.google_web_client_id_token))
                 .requestEmail()
@@ -108,6 +109,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void signInWithGoogle(String token){
+        Log.d(TAG,"signInWithGoogle");
         AuthCredential authCredential = GoogleAuthProvider.getCredential(token, null);
         firebaseAuth.signInWithCredential(authCredential)
                 .addOnCompleteListener(task -> {
@@ -121,6 +123,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void signInFacebook(CallbackManager callbackManager){
+        Log.d(TAG, "signInFacebook");
         LoginManager.getInstance()
                 .logInWithReadPermissions((LoginActivity)context.getApplicationContext(), Arrays.asList("profile","email"));
 
@@ -145,6 +148,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void signInWithFacebook(String token){
+        Log.d(TAG, "signInWithFacebook");
         AuthCredential authCredential = FacebookAuthProvider.getCredential(token);
         firebaseAuth.signInWithCredential(authCredential)
                 .addOnCompleteListener(task -> {

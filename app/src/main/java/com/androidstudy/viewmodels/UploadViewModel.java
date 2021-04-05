@@ -54,7 +54,7 @@ public class UploadViewModel extends ViewModel {
 
         storageReference.putFile(uri).continueWithTask(task -> {
             return storageReference.getDownloadUrl();
-        }).addOnCompleteListener(contentUri -> {
+        }).addOnSuccessListener(contentUri -> {
             ContentDTO contentDTO = new ContentDTO();
 
             // Insert downloadUri of image
