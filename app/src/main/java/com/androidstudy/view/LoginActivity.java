@@ -43,6 +43,12 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
     private CallbackManager callbackManager;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        startMain(loginViewModel.getFirebaseAuth().getCurrentUser());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
@@ -88,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
     public void startMain(FirebaseUser user) {
         Log.d(TAG, "startMain");
         if (user != null) {
+            loginViewModel.registerPushToken();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }

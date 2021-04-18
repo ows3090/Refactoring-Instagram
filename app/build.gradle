@@ -42,8 +42,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    // firebase
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.4'
@@ -77,6 +75,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
 
     // Import the BoM for the Firebase platform
+    // firebase
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-firestore'
@@ -84,7 +84,14 @@ dependencies {
     // multidex
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.android.support:multidex:1.0.3'
+
+    // Fcm push
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-analytics'
+
+    // push해야할 경우 Api key security으로 인해 서버에서 전송해야 합니다.
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 
 
 }

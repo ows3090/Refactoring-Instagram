@@ -24,8 +24,11 @@ import com.androidstudy.R;
 import com.androidstudy.databinding.FragmentDetailViewBinding;
 import com.androidstudy.databinding.ItemDetailBinding;
 import com.androidstudy.model.ContentDTO;
+import com.androidstudy.view.CommentActivity;
+import com.androidstudy.view.MainActivity;
 import com.androidstudy.viewmodels.DetailViewModel;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -64,7 +67,15 @@ public class DetailViewFragment extends Fragment {
         binding.fragmentDetailRv.setAdapter(adapter);
 
         detailViewModel.getContentListData().observe(getActivity(), pairs -> {
+            Log.d(TAG, "ContentList size : "+pairs.size());
+            detailViewModel.getProfileInFirestore();
             adapter.setContentList(pairs);
+            adapter.notifyDataSetChanged();
+        });
+
+        detailViewModel.getProfileMapData().observe(getActivity(), profiles -> {
+            Log.d(TAG, "ProfileList size : "+profiles.size());
+            adapter.setProfileMap(profiles);
             adapter.notifyDataSetChanged();
         });
 
@@ -76,6 +87,9 @@ public class DetailViewFragment extends Fragment {
 
         @Setter
         ArrayList<Pair<String, ContentDTO>> contentList = new ArrayList<>();
+
+        @Setter
+        Map<String,String> profileMap = new HashMap<>();
 
         public DetailViewRecyclerViewAdapter() {
             detailViewModel.getContentInFirestore();
@@ -114,75 +128,44 @@ public class DetailViewFragment extends Fragment {
             });
 
             if(content.second.getFavorites().containsKey(detailViewModel.getUserUid())){
-                holder.itembinding.itemDetailIvLike.setImageResource(R.drawable.ic_favorite);
+                Glide.with(holder.itembinding.getRoot().getContext()).load(R.drawable.ic_favorite)
+                        .into(holder.itembinding.itemDetailIvLike);
             }else {
-                holder.itembinding.itemDetailIvLike.setImageResource(R.drawable.ic_favorite_border);
+                Glide.with(holder.itembinding.getRoot().getContext()).load(R.drawable.ic_favorite_border)
+                        .into(holder.itembinding.itemDetailIvLike);
             }
+
+            if(profileMap.containsKey(content.second.getUid())){
+                Glide.with(holder.itembinding.getRoot().getContext()).load(profileMap.get(content.second.getUid()))
+                        .apply(new RequestOptions().circleCrop())
+                        .into(holder.itembinding.itemDetailIvProfile);
+            }
+
+            holder.itembinding.itemDetailIvProfile.setOnClickListener(v -> {
+                MainActivity mainActivity = (MainActivity)getActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("destinationUid",content.second.getUid());
+                bundle.putString("destinationEmail",content.second.getUserId());
+                mainActivity.getBinding().activityMainBottomNavigation.getMenu().findItem(R.id.bn_menu_action_account).setChecked(true);
+                mainActivity.getMenuStack().add(R.id.bn_menu_action_account);
+                mainActivity.getNavController().navigate(R.id.userFragment,bundle);
+            });
+
+            holder.itembinding.itemDetailIvComment.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), CommentActivity.class);
+                intent.putExtra("contentUid",content.first);
+                intent.putExtra("destinationUid", content.second.getUid());
+
+                if(profileMap.containsKey(detailViewModel.getUserUid())){
+                    intent.putExtra("profileUri", profileMap.get(detailViewModel.getUserUid()));
+                }
+                startActivity(intent);
+            });
         }
 
         @Override
         public int getItemCount() {
             return contentList.size();
         }
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach");
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated");
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG,"onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestory");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach");
     }
 }

@@ -74,6 +74,7 @@ public class AddPhotoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult");
         if(requestCode == UPLOAD_CODE && resultCode == RESULT_OK){
+            setResult(RESULT_OK);
             finish();
         }else if(requestCode == ALBUM_CODE && resultCode == RESULT_OK){
             String filepath = addPhotoViewModel.getFilePath(data.getData());

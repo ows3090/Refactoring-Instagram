@@ -15,10 +15,10 @@ public class LoginTest {
 
     @Test
     public void firebaseInstanceDI(){
-        LoginViewModel loginViewModel = new LoginViewModel();
-        FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
-        firebaseComponent.inject(loginViewModel);
-        assertNotNull(loginViewModel);
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        FirebaseComponent firebaseComponent = DaggerFirebaseComponent.create();
+//        firebaseComponent.inject(loginViewModel);
+//        assertNotNull(loginViewModel);
     }
 
 }

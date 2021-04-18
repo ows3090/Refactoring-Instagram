@@ -34,5 +34,9 @@
         android:id="@+id/userFragment"
         android:name="com.androidstudy.navigation.UserFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user" >
+        <argument
+            android:name="destinationUid"
+            app:argType="string" />
+    </fragment>
 </navigation>

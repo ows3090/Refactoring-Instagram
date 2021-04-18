@@ -40,6 +40,6 @@ public class ContentDTO {
         private String comment = null;
 
         @Getter @Setter
-        private Long timestampe = 0L;
+        private Long timestamp = 0L;
     }
 }

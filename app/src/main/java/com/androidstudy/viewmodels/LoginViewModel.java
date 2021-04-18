@@ -34,10 +34,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
@@ -57,6 +61,9 @@ public class LoginViewModel extends AndroidViewModel {
 
     @Inject @Getter
     FirebaseAuth firebaseAuth;
+
+    @Inject
+    FirebaseFirestore firestore;
 
     @Getter
     private MutableLiveData<FirebaseUser> firebaseUser = new MutableLiveData<>();
@@ -125,9 +132,6 @@ public class LoginViewModel extends AndroidViewModel {
     public void signInFacebook(CallbackManager callbackManager){
         Log.d(TAG, "signInFacebook");
         LoginManager.getInstance()
-                .logInWithReadPermissions((LoginActivity)context.getApplicationContext(), Arrays.asList("profile","email"));
-
-        LoginManager.getInstance()
                 .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -161,6 +165,18 @@ public class LoginViewModel extends AndroidViewModel {
                 });
     }
 
+    // Fcm Push Token 생성
+    public void registerPushToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            String token = task.getResult().getToken();
+            String uid = firebaseAuth.getCurrentUser().getUid();
+            Map<String, String> map = new HashMap<>();
+            map.put("pushToken",token);
+
+            firestore.collection("pushtoken").document(uid).set(map);
+        });
+    }
+
     // 어플리케이션의 해시값 가져오는 함수
     public void printHashKey() {
         try {
@@ -177,5 +193,6 @@ public class LoginViewModel extends AndroidViewModel {
             Log.e(TAG, "printHashKey()", e);
         }
     }
+
 
 }

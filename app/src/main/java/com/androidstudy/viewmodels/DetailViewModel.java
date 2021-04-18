@@ -3,6 +3,7 @@ package com.androidstudy.viewmodels;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,13 +11,17 @@ import com.androidstudy.di.DaggerFirebaseComponent;
 import com.androidstudy.di.FirebaseComponent;
 import com.androidstudy.model.AlarmDTO;
 import com.androidstudy.model.ContentDTO;
+import com.androidstudy.util.FcmPush;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -34,7 +39,12 @@ public class DetailViewModel extends ViewModel {
     FirebaseAuth firebaseAuth;
 
     @Getter
-    private MutableLiveData<ArrayList<Pair<String, ContentDTO>>> contentListData = new MutableLiveData<>();;
+    private MutableLiveData<ArrayList<Pair<String, ContentDTO>>> contentListData = new MutableLiveData<>();
+    private ArrayList<Pair<String,ContentDTO>> contentItems = new ArrayList<>();
+
+    @Getter
+    private MutableLiveData<Map<String, String>> profileMapData = new MutableLiveData<>();
+    private Map<String, String> profileMap = new HashMap<>();
 
     @Getter
     private String userUid;
@@ -48,22 +58,35 @@ public class DetailViewModel extends ViewModel {
 
     public void getContentInFirestore() {
         Log.d(TAG, "getContentInFirestore");
-        ArrayList<Pair<String, ContentDTO>> contentList = new ArrayList<>();
         firestore.collection("images").orderBy("timestamp", Query.Direction.DESCENDING).addSnapshotListener(((result, error) -> {
+            contentItems.clear();
             if (result != null) {
                 for(DocumentSnapshot snapshot : result.getDocuments()){
                     ContentDTO contentInfo = snapshot.toObject(ContentDTO.class);
-                    contentList.add(new Pair<>(snapshot.getId(), contentInfo));
+                    contentItems.add(new Pair<>(snapshot.getId(), contentInfo));
                 }
-                contentListData.setValue(contentList);
+                contentListData.setValue(contentItems);
             }
         }));
     }
 
+    public void getProfileInFirestore() {
+        firestore.collection("profileImages").addSnapshotListener((value, error) -> {
+            profileMap.clear();
+            if(value != null){
+                for(DocumentSnapshot snapshot : value.getDocuments()){
+                    profileMap.put(snapshot.getId(), (String)snapshot.getData().get("image"));
+                }
+            }
+            profileMapData.setValue(profileMap);
+        });
+    }
+
     public void favoriteEvent(int position){
         Log.d(TAG, "favoriteEvent");
-        Pair<String, ContentDTO> pair = contentListData.getValue().get(position);
-        DocumentReference reference = firestore.collection("images").document(pair.first);
+        Pair<String, ContentDTO> contents = contentItems.get(position);
+
+        DocumentReference reference = firestore.collection("images").document(contents.first);
         firestore.runTransaction(transaction -> {
             ContentDTO contentDTO = transaction.get(reference).toObject(ContentDTO.class);
 
@@ -73,12 +96,13 @@ public class DetailViewModel extends ViewModel {
             }else{
                 contentDTO.setFavoriteCount(contentDTO.getFavoriteCount()+1);
                 contentDTO.getFavorites().put(userUid,true);
-                //favoriteAlarm(pair.second.getUid());
+                favoriteAlarm(contents.second.getUid());
             }
-            contentListData.getValue().set(position, new Pair<>(pair.first, contentDTO));
+            contentItems.set(position, new Pair<>(contents.first, contentDTO));
             transaction.set(reference, contentDTO);
             return true;
         });
+
     }
 
     private void favoriteAlarm(String destinationUid){
@@ -87,11 +111,11 @@ public class DetailViewModel extends ViewModel {
         alarmDTO.setUserId(firebaseAuth.getCurrentUser().getEmail());
         alarmDTO.setUid(userUid);
         alarmDTO.setKind(0);
+        alarmDTO.setMessage(firebaseAuth.getCurrentUser().getEmail()+"님이 좋아요를 눌렀습니다");
         alarmDTO.setTimestamp(System.currentTimeMillis());
 
         firestore.collection("alarms").document().set(alarmDTO);
-
-        String message = firebaseAuth.getCurrentUser().getEmail()+"님이 좋아요를 눌렀습니다";
+        FcmPush.getInstance().sendMessage(userUid,"Refacstagram",alarmDTO.getMessage());
     }
 
 }
