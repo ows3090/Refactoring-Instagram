@@ -1,6 +1,7 @@
 # Refactoring-Instagram
 Refactoring-Instagram is designed based on mvvm architecture.
 Also, it uses android architecutre components.(viewmodel, livedata, navigation)
+<br>
 
 ## Library
 - Minimum SDK 16
@@ -15,4 +16,6 @@ Also, it uses android architecutre components.(viewmodel, livedata, navigation)
 - Multidex
 - OkHttp3 : Implement fcm push
 - Gson : Convert java object to JSON
+<br>
 
+## Architecture
