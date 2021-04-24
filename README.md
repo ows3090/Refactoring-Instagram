@@ -1,6 +1,10 @@
 # Refactoring-Instagram
 Refactoring-Instagram is designed based on mvvm architecture.
 Also, it uses android architecutre components.(viewmodel, livedata, navigation)
+
+![image](https://user-images.githubusercontent.com/34837583/115967955-51aacb80-a570-11eb-9a99-7108c0580537.png)
+![image](https://user-images.githubusercontent.com/34837583/115968024-933b7680-a570-11eb-8fc5-cd4eadc8a443.png)
+
 <br>
 
 ## Library
