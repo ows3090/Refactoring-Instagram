@@ -32,5 +32,4 @@ Also, it uses android architecutre components.(viewmodel, livedata, navigation)
 The mvvm architecture basically integrates the local database and remote data using the repository pattern.
 Howerver, Firestore provides its own local cache. This means we don't have to use repository pattern.
 <br>
-
-![image](https://user-images.githubusercontent.com/34837583/115968932-2aa2c880-a575-11eb-9101-5f021f81df82.png)
+![image](https://user-images.githubusercontent.com/34837583/115969246-fe884700-a576-11eb-8218-53a06f115a93.png)
