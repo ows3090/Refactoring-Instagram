@@ -12,15 +12,19 @@ Also, it uses android architecutre components.(viewmodel, livedata, navigation)
 - Minimum SDK 16
 - Java based
 - Firebase (FirebaseAuth, Firebasestorage, FirebaseFirestore, Firebase Cloud Message)
+- Facebook : Login 
 - Jetpack
   - LiveData : an observable data holder class
   - Navigation : use fragment so easily
   - ViewModel : Designed to store and manage UI-related in a lifecycle.
 - Daager : Dependency Injection
 - Glide : Image loading
-- Multidex
 - OkHttp3 : Implement fcm push
 - Gson : Convert java object to JSON
+- mockito : Unit test
 <br>
 
-## Architecture
+## MAD Scorecard
+![image](https://user-images.githubusercontent.com/34837583/115968508-41482000-a573-11eb-8df1-211831f9100f.png)
+![image](https://user-images.githubusercontent.com/34837583/115968538-65a3fc80-a573-11eb-879a-77893d23cc33.png)
+
