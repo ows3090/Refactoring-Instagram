@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,7 +37,7 @@ import java.util.Arrays;
 
 import lombok.NonNull;
 
-public class LoginActivity extends AppCompatActivity implements SignUpFragment.DialogConfirmListener {
+public class LoginActivity extends AppCompatActivity {
     public static final String TAG = LoginActivity.class.getSimpleName();
     public static final int GOOGLE_LOGIN_CODE = 9001;
     private ActivityLoginBinding binding;
@@ -58,6 +60,16 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
         binding.setViewmodel(loginViewModel);
         callbackManager = CallbackManager.Factory.create();
 
+        binding.activityLoginBtnSignin.setOnClickListener(v -> {
+            Log.d(TAG, "SignUpRefacstargram");
+            SignUpFragment signUpFragment = new SignUpFragment(this);
+            getSupportFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .add(android.R.id.content, signUpFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         loginViewModel.getFirebaseUser().observe(this, user -> {
             startMain(user);
         });
@@ -65,12 +77,7 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
         loginViewModel.getGoogleSignInClient().observe(this, googleSignInClient -> {
             startGoogle(googleSignInClient);
         });
-    }
 
-    @Override
-    public void onSignUpFirebase(@NonNull String email, @NonNull String password) {
-        Log.d(TAG, "onSignUpFirebase");
-        loginViewModel.signUpFirebase(email, password);
     }
 
     @Override
@@ -98,16 +105,6 @@ public class LoginActivity extends AppCompatActivity implements SignUpFragment.D
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
-    }
-
-    public void signUpRefacstagram(View view) {
-        Log.d(TAG, "SignUpRefacstargram");
-        SignUpFragment signUpFragment = new SignUpFragment(this);
-        getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .add(android.R.id.content, signUpFragment)
-                .addToBackStack(null)
-                .commit();
     }
 
     public void startGoogle(GoogleSignInClient googleSignInClient) {

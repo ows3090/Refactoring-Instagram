@@ -2,6 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.androidstudy.viewmodels.SignUpViewModel" />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,9 +32,16 @@
 
                 <EditText
                     android:id="@+id/dialog_signin_email_et"
+                    android:text="@={viewmodel.email}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/signup_email"/>
+
+                <TextView
+                    android:id="@+id/dialog_sigin_email_tv"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -40,9 +52,16 @@
 
                 <EditText
                     android:id="@+id/dialog_signin_password_et"
+                    android:text="@={viewmodel.password}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/signup_password"/>
+
+                <TextView
+                    android:id="@+id/dialog_sigin_password_tv"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <android.widget.Button

@@ -97,7 +97,7 @@
             android:theme="@style/ButtonStyle" />
 
         <android.widget.Button
-            android:onClick="signUpRefacstagram"
+            android:id="@+id/activity_login_btn_signin"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop");
-        FcmPush.getInstance().sendMessage("PhfPd72jWAMA64M6TczjT4dbnOO2","hi","text");
     }
 
     public void setToolbarDefault(){

@@ -1,31 +1,26 @@
 package com.androidstudy.viewmodels;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.androidstudy.R;
-import com.androidstudy.databinding.ActivityLoginBinding;
 import com.androidstudy.di.DaggerFirebaseComponent;
 import com.androidstudy.di.FirebaseComponent;
-import com.androidstudy.view.LoginActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -39,7 +34,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -85,10 +79,12 @@ public class LoginViewModel extends AndroidViewModel {
         Log.d(TAG, "signUpFirebase");
         firebaseAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(task -> {
-                    Log.e(TAG, "Firebase createUserWithEmailAndPassword success");
+                    if(task.isSuccessful()) {
+                        Log.e(TAG, "Firebase createUserWithEmailAndPassword success");
+                    }
                 }).addOnFailureListener(e -> {
                     Log.e(TAG, "Firebase createUserWithEmailAndPassword fail : "+e.getMessage());
-                });
+        });
     }
 
     public void signInFirebase(){

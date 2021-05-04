@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +56,7 @@ public class CommentActivity extends AppCompatActivity {
 
         binding.activityCommentBtnUpload.setOnClickListener(v -> {
             commentViewModel.uploadInFirebase();
+            binding.actvitiyCommentEt.setText(null);
         });
 
         binding.activityCommentRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

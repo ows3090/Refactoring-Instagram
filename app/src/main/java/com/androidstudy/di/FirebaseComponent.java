@@ -7,6 +7,7 @@ import com.androidstudy.viewmodels.CommentViewModel;
 import com.androidstudy.viewmodels.DetailViewModel;
 import com.androidstudy.viewmodels.GridViewModel;
 import com.androidstudy.viewmodels.LoginViewModel;
+import com.androidstudy.viewmodels.SignUpViewModel;
 import com.androidstudy.viewmodels.UploadViewModel;
 import com.androidstudy.viewmodels.UserViewModel;
 
@@ -24,4 +25,5 @@ public interface FirebaseComponent {
     void inject(CommentViewModel commentViewModel);
     void inject(AlarmViewModel alarmViewModel);
     void inject(FcmPush fcmPush);
+    void inject(SignUpViewModel signUpViewModel);
 }
