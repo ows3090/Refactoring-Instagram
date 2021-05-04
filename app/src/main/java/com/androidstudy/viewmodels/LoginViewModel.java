@@ -75,18 +75,6 @@ public class LoginViewModel extends AndroidViewModel {
         firebaseComponent.inject(this);
     }
 
-    public void signUpFirebase(String email, String password){
-        Log.d(TAG, "signUpFirebase");
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
-                        Log.e(TAG, "Firebase createUserWithEmailAndPassword success");
-                    }
-                }).addOnFailureListener(e -> {
-                    Log.e(TAG, "Firebase createUserWithEmailAndPassword fail : "+e.getMessage());
-        });
-    }
-
     public void signInFirebase(){
         Log.d(TAG, "signInFirebase");
         firebaseAuth.signInWithEmailAndPassword(email, password)
