@@ -23,10 +23,11 @@ import okhttp3.Response;
 // Android 서버
 public class FcmPush {
 
+    // gitignore 적용
     public static final String TAG = FcmPush.class.getSimpleName();
     private MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private String url = "https://fcm.googleapis.com/fcm/send";
-    private String serverkey = "";
+    private String serverkey = "AAAAuhv_HmQ:APA91bF92j7O9NPEmJb9wlEOFIEH6nO6SO0vDpiPZ3YMZ7xY_qzPysc6CIPfbF1eSZiOHTofmGKc4xkwYSLacWuCbFA9I_NjC1uSoy5EFb1TkRDRb5C3cfiKfgn1V00qk0vwvJY-K_q4";
     private Gson gson = null;
     private OkHttpClient okHttpClient = null;
 
