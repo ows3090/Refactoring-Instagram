@@ -63,7 +63,7 @@ public class DetailViewFragment extends Fragment {
         binding.setViewmodel(detailViewModel);
 
         binding.fragmentDetailRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        DetailViewRecyclerViewAdapter adapter = new DetailViewRecyclerViewAdapter();
+        DetailViewRecyclerViewAdapter adapter = new DetailViewRecyclerViewAdapter(getArguments().getString("destinationUid"));
         binding.fragmentDetailRv.setAdapter(adapter);
 
         detailViewModel.getContentListData().observe(getActivity(), pairs -> {
@@ -91,8 +91,13 @@ public class DetailViewFragment extends Fragment {
         @Setter
         Map<String,String> profileMap = new HashMap<>();
 
-        public DetailViewRecyclerViewAdapter() {
-            detailViewModel.getContentInFirestore();
+        public DetailViewRecyclerViewAdapter(String uid) {
+            if(uid == null){
+                detailViewModel.getContentInFirestore();
+            }else{
+                detailViewModel.getUserContentInFirestore(uid);
+            }
+
         }
 
         class DetailViewHolder extends RecyclerView.ViewHolder{

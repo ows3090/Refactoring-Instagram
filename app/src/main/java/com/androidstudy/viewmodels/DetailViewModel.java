@@ -118,4 +118,16 @@ public class DetailViewModel extends ViewModel {
         FcmPush.getInstance().sendMessage(userUid,"Refacstagram",alarmDTO.getMessage());
     }
 
+    public void getUserContentInFirestore(String uid) {
+        firestore.collection("images").whereEqualTo("uid",uid).addSnapshotListener(((value, error) -> {
+            contentItems.clear();
+            if(value != null){
+                for(DocumentSnapshot snapshot : value.getDocuments()) {
+                    ContentDTO contentDTO = snapshot.toObject(ContentDTO.class);
+                    contentItems.add(new Pair<>(snapshot.getId(), contentDTO));
+                }
+                contentListData.setValue(contentItems);
+            }
+        }));
+    }
 }

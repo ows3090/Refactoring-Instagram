@@ -24,6 +24,7 @@ import com.androidstudy.R;
 import com.androidstudy.databinding.FragmentGridBinding;
 import com.androidstudy.databinding.FragmentUserBinding;
 import com.androidstudy.model.ContentDTO;
+import com.androidstudy.view.MainActivity;
 import com.androidstudy.viewmodels.GridViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -95,6 +96,13 @@ public class GridFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
             ImageView imageView = holder.imageView;
+            holder.imageView.setOnClickListener(v -> {
+                /**
+                MainActivity mainActivity = (MainActivity)getActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("destinationUid",contentList.get(position).getUid());
+                **/
+            });
             Glide.with(binding.getRoot().getContext()).load(contentList.get(position).getImageUri())
                     .apply(new RequestOptions().centerCrop()).into(imageView);
         }

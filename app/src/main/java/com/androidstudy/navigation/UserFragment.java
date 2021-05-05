@@ -130,8 +130,7 @@ public class UserFragment extends Fragment {
             mainActivity.getBinding().activityMainTvUserid.setText(getArguments().getString("destinationEmail"));
             mainActivity.getBinding().activityMainIvBack.setOnClickListener(v -> {
                 mainActivity.setToolbarDefault();
-                mainActivity.getMenuStack().pop();
-                mainActivity.getNavController().navigate(R.id.detailViewFragment);
+                mainActivity.onBackPressed();
             });
 
             mainActivity.getBinding().activityMainIvLogo.setVisibility(View.GONE);
